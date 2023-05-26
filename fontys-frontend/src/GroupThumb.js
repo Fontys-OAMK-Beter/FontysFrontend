@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './GroupThumb.scss';
 
 class GroupThumb extends Component {
     render() {
