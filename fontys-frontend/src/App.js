@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.scss';
 import React, { useState, useEffect } from "react";
+import GroupThumb from './GroupThumb';
 
 function App() {
   const [data, setData] = useState(null);
@@ -22,7 +23,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        
+
         <ul>
           <li>
             <a href="#">
@@ -42,6 +43,10 @@ function App() {
         </ul>
 
       </header>
+
+      <main>
+        <GroupThumb></GroupThumb>
+      </main>
     </div>
   );
 }
