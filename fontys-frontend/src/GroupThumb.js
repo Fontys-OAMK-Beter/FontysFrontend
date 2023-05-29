@@ -6,22 +6,24 @@ export default class GroupThumb extends Component {
         const group = this.props.group;
         return (
             <div className="Groupthumb">
-                <img></img>
+                <a href={"groups/"+group.id}><img src={group.pictureUrl} alt={group.name}></img></a>
                 <div>
-                    <h3>{group.name}</h3>
+                    <h3><a href={"groups/"+group.id}>{group.name}</a></h3>
                     <ul>
                         {group.members.map(member => (
                         <li>
-                            <a><img src={member.pictureUrl} alt={member.name}></img></a>
+                            <a href={"users/"+member.id}>
+                                <img src={member.pictureUrl} alt={member.name} title={member.name}></img>
+                            </a>
                         </li>
                         ))}
                     </ul>
 
-                    <span>Upcoming events:</span>
+                    <h4>Upcoming events:</h4>
                     <div>
                         {group.upcomingEvents.map(event => (
-                        <a href="#">
-                            <h4>{event.title}</h4>
+                        <a href={"events/"+event.id}>
+                            <h5>{event.title}</h5>
                             <span>{event.date}</span>
                         </a>
                         ))}
