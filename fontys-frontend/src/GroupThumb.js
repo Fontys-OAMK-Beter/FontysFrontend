@@ -1,40 +1,33 @@
 import React, { Component } from 'react';
 import './GroupThumb.scss';
 
-class GroupThumb extends Component {
+export default class GroupThumb extends Component {
     render() {
+        const group = this.props.group;
         return (
             <div className="Groupthumb">
                 <img></img>
                 <div>
-                    <h3>Group name</h3>
+                    <h3>{group.name}</h3>
                     <ul>
+                        {group.members.map(member => (
                         <li>
-                            <a><img></img></a>
+                            <a><img src={member.pictureUrl} alt={member.name}></img></a>
                         </li>
-                        <li>
-                            <a><img></img></a>
-                        </li>
-                        <li>
-                            <a><img></img></a>
-                        </li>
+                        ))}
                     </ul>
 
                     <span>Upcoming events:</span>
                     <div>
+                        {group.upcomingEvents.map(event => (
                         <a href="#">
-                            <h4>Shrek the Third</h4>
-                            <span>19/08/2023</span>
+                            <h4>{event.title}</h4>
+                            <span>{event.date}</span>
                         </a>
-                        <a href="#">
-                            <h4>Ratatouille</h4>
-                            <span>06/07/2023</span>
-                        </a>
+                        ))}
                     </div>
                 </div>
             </div>
         )
     }
 }
-
-export default GroupThumb
