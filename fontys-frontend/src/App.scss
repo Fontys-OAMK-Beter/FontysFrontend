@@ -1,0 +1,47 @@
+.App {
+
+    .App-header {
+        height: 100px;
+        background-color: #9716A3 !important;
+        display: flex;
+        align-items: center;
+
+        .App-logo {
+            height: 80px;
+        }
+
+        ul {
+            li {
+                display: inline-block;
+                margin-right: 40px;
+                a {
+                    font-family: monospace;
+                    font-size: 1.5rem;
+                    color: #fff;
+                    text-decoration: none;
+                    position: relative;
+                    padding-bottom: 5px;
+
+                    &::after {
+                        content: '';
+                        display: block;
+                        width: 0%;
+                        height: 2px;
+                        background-color: #fff !important;
+                        position: absolute;
+                        left: 0;
+                        bottom: 0;
+                        transition: .3s;
+                    }
+
+                    &:hover {
+
+                        &::after {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
