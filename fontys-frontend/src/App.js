@@ -1,9 +1,9 @@
 import {BrowserRouter, Route, Routes, NavLink, Outlet} from 'react-router-dom';
 import logo from './logo.svg';
-import './App.scss';
+import './styles/App.scss';
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import CreateGroupPage from './components/CreateParty';
+import CreateGroupPage from './pages/CreateParty';
 import MovieList from './components/Search';
 import Groups from './pages/Groups';
 import GroupDetails from './pages/GroupDetails';
@@ -29,13 +29,16 @@ function App() {
                 Profile
               </NavLink>
             </li>
+            <li>
+              <NavLink to="/movies">
+                Movies
+              </NavLink>
+            </li>
           </ul>
 
         </header>
 
         <main>
-          
-
           <Outlet />
         </main>
       </div>

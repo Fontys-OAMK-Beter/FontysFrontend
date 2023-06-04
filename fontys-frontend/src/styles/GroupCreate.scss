@@ -1,0 +1,50 @@
+.GroupCreate {
+    display: flex;
+    margin: 0 auto;
+    padding: 50px 20px;
+    gap: 20px;
+    flex-wrap: wrap;
+    max-width: 1400px;
+    justify-content: center;
+
+    >div {
+        h1 {
+            display: block;
+                
+        }
+        input {
+            box-sizing: border-box;
+            display: block;
+            border: none;
+            background-color: #eee;
+            border-radius: 10px;
+            padding: .5rem .8rem;
+            width: 100%;
+            margin-bottom: 10px;
+
+            &::placeholder{
+                color: #777;
+            }
+
+            &:focus {
+                outline: 1px solid lighten(#9716A3, 8);
+            }
+        }
+        button {
+            display: block;
+            background-color: #9716A3;
+            border: none;
+            color: #fff;
+            padding: .5rem 1rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-left: auto;
+            cursor: pointer;
+            transition: .2s;
+
+            &:hover {
+                background-color: lighten(#9716A3, 8);
+            }
+        }
+    }
+}

@@ -1,6 +1,8 @@
 .Groupthumb {
     display: inline-flex;
-    background-color: #bbb;
+    background-color: #eee;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px rgba(black, .15);
 
     > a{
         display: inline-block;
@@ -9,6 +11,12 @@
             width: 300px;
             height: 100%;
             object-fit: cover;
+            border-radius: 10px 0 0 10px;
+        }
+        transition: .2s;
+
+        &:hover {
+            opacity: .8;
         }
     }
 
@@ -20,6 +28,11 @@
             a {
                 text-decoration: none;
                 color: black;
+                transition: .2s;
+
+                &:hover {
+                    color: lighten(#9716A3, 8);
+                }
             }
         }
 
@@ -29,11 +42,18 @@
             li {
                 display: inline-block;
                 margin-right: 3px;
-                img {
-                    border-radius: 50%;
-                    width: 30px;
-                    aspect-ratio: 1;
-                    object-fit: cover;
+                a{
+                    transition: .2s;
+
+                    &:hover {
+                        opacity: .6;
+                    }
+                    img {
+                        border-radius: 50%;
+                        width: 30px;
+                        aspect-ratio: 1;
+                        object-fit: cover;
+                    }
                 }
             }
         }
@@ -52,6 +72,7 @@
                 background-color: #9716A3;
                 text-decoration: none;
                 margin-bottom: 5px;
+                transition: .2s;
                 h5 {
                     color: #fff;
                     padding: 0;

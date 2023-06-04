@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Grid } from "react";
-import GroupThumb from '../GroupThumb';
+import GroupThumb from '../components/GroupThumb';
+import '../styles/Groups.scss'
 
 export default class Groups extends React.Component {
     
@@ -61,7 +62,8 @@ export default class Groups extends React.Component {
         GroupsList.push(GroupsList[0]);
 
         return (
-            <div>
+            <div className="GroupsList">
+                <a href="/groups/create">Create a group</a>
                 <h2>Your groups</h2>
                 {GroupsList.map(Group =>
                     <GroupThumb group={Group} key={Group.id}></GroupThumb>

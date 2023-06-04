@@ -7,8 +7,12 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+
+// PAGES
 import Groups from './pages/Groups';
 import GroupDetails from './pages/GroupDetails';
+import MovieList from './components/Search';
+import CreateGroupPage from './pages/CreateParty';
 
 const router = createBrowserRouter([
   {
@@ -22,7 +26,15 @@ const router = createBrowserRouter([
       {
         path: "/groups/:groupId",
         element: <GroupDetails />,
-      }
+      },
+      {
+        path: "/groups/create",
+        element: <CreateGroupPage />,
+      },
+      {
+        path: "/movies",
+        element: <MovieList />,
+      },
     ],
   },
 ]);

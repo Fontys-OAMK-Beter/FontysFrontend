@@ -1,0 +1,47 @@
+.moviesList {
+    padding: 50px;
+    >div {
+        display: grid;
+        grid-template-columns:  1fr 1fr 1fr 1fr;
+        gap: 20px;
+        >a {
+            background-color: #eee;
+            border-radius: 10px;
+            box-shadow: 5px 5px 10px rgba(black, .15);
+            text-decoration: none;
+            
+            *{
+                display: block;
+                transition: .2s;
+            }
+            img {
+                border-radius: 10px 10px 0 0;
+                width: 100%;
+                object-fit: cover;
+                object-position: top;
+                height: 350px;
+            }
+            h2{
+                padding: 0 10px;
+                margin: 5px 0;
+                font-size: 1.2rem;
+                color: black;
+            }
+            p{
+                padding: 0 10px;
+                margin: 5px 0;
+                color: #aaa;
+                font-weight: bold;
+            }
+
+            &:hover {
+                img {
+                    opacity: .7;
+                }
+                h2 {
+                    color: lighten(#9716A3, 8);
+                }
+            }
+        }
+    }
+}

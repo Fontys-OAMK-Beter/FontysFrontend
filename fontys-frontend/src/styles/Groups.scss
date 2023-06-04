@@ -1,0 +1,42 @@
+.GroupsList {
+    display: flex;
+    margin: 0 auto;
+    padding: 0 20px;
+    gap: 20px;
+    flex-wrap: wrap;
+    max-width: 1400px;
+    justify-content: center;
+
+    h2 {
+        flex: 0 0 100%;
+        margin-bottom: 0;
+    }
+    > div {
+        flex: 0 0 calc(50% - 10px);
+    }
+
+    > a {
+        margin: 50px 0 0 0;
+        background-color: #9716A3;
+        color: white;
+        text-decoration: none;
+        padding: .8rem 1.2rem .8rem 2.5rem;
+        border-radius: 10px;
+        font-weight: bolder;
+        text-transform: uppercase;
+        position: relative;
+            transition: .2s;
+
+        &::before {
+            content: '+';
+            font-size: 2rem;
+            position: absolute;
+            line-height: .9rem;
+            left: 10px;
+        }
+
+        &:hover {
+            background-color: lighten(#9716A3, 8);
+        }
+    }
+}

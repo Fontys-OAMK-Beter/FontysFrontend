@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/GroupCreate.scss'
 
 class CreateGroupPage extends React.Component {
     constructor(props) {
@@ -41,10 +42,12 @@ class CreateGroupPage extends React.Component {
 
     render() {
         return (
-            <div>
-                <h1>Create Group</h1>
-                <input type="text" value={this.state.groupName} onChange={this.handleGroupNameChange} />
-                <button onClick={this.handleCreateGroup}>Create Group</button>
+            <div className='GroupCreate'>
+                <div>
+                    <h1>Create a group</h1>
+                    <input placeholder="Your group name here..." type="text" value={this.state.groupName} onChange={this.handleGroupNameChange} />
+                    <button onClick={this.handleCreateGroup}>Create!</button>
+                </div>
             </div>
         );
     }
