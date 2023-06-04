@@ -1,10 +1,12 @@
 import {BrowserRouter, Route, Routes, NavLink, Outlet} from 'react-router-dom';
 import logo from './logo.svg';
 import './App.scss';
-import React, { useState, useEffect, Grid } from "react";
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
+import CreateGroupPage from './components/CreateParty';
+import MovieList from './components/Search';
 import Groups from './pages/Groups';
 import GroupDetails from './pages/GroupDetails';
-
 function App() {
   return (
       <div className="App">
