@@ -8,7 +8,7 @@ export default class GroupThumb extends Component {
             <div className="Groupthumb">
                 <a href={"groups/"+group.id}><img src={group.pictureUrl} alt={group.name}></img></a>
                 <div>
-                    <h3><a href={"groups/"+group.id}>{group.name}</a></h3>
+                    <h3><a to={"groups/"+group.id}>{group.name}</a></h3>
                     <ul>
                         {group.members.map(member => (
                         <li>

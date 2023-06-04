@@ -51,6 +51,7 @@
                 border-radius: 5px;
                 background-color: #9716A3;
                 text-decoration: none;
+                margin-bottom: 5px;
                 h5 {
                     color: #fff;
                     padding: 0;
@@ -58,6 +59,10 @@
                 }
                 span {
                     color: #fff;
+                }
+
+                &:hover {
+                    background-color: lighten(#9716A3, 8);
                 }
             }
         }
