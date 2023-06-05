@@ -1,5 +1,45 @@
 .moviesList {
     padding: 50px;
+    margin: 0 auto;
+    max-width: 1400px;
+    >form {
+        margin-bottom: 50px;
+        input {
+            box-sizing: border-box;
+            display: block;
+            border: none;
+            background-color: #eee;
+            border-radius: 10px;
+            padding: .5rem .8rem;
+
+            &::placeholder{
+                color: #777;
+            }
+
+            &:focus {
+                outline: 1px solid lighten(#9716A3, 8);
+            }
+        }
+        button {
+            margin: 10px 0 0 0;
+            background-color: #9716A3;
+            color: white;
+            text-decoration: none;
+            padding: .8rem 1.2rem;
+            border-radius: 10px;
+            font-weight: bolder;
+            text-transform: uppercase;
+            position: relative;
+            border: none;
+            transition: .2s;
+            cursor: pointer;
+    
+            &:hover {
+                background-color: lighten(#9716A3, 8);
+            }
+        }
+    }
+
     >div {
         display: grid;
         grid-template-columns:  1fr 1fr 1fr 1fr;
