@@ -11,31 +11,32 @@ function App() {
   return (
       <div className="App">
         <header className="App-header">
-          <img src={myLogo} className="App-logo" alt="logo"/>
+          <div>
+            <img src={myLogo} className="App-logo" alt="logo"/>
 
-          <ul>
-            <li>
-              <NavLink to="/groups">
-                Groups
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/events">
-                Events
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/profile">
-                Profile
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/movies">
-                Movies
-              </NavLink>
-            </li>
-          </ul>
-
+            <ul>
+              <li>
+                <NavLink to="/groups">
+                  Groups
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/events">
+                  Events
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/profile">
+                  Profile
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/movies">
+                  Movies
+                </NavLink>
+              </li>
+            </ul>
+          </div>
         </header>
 
         <main>
