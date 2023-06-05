@@ -12,7 +12,9 @@ function App() {
       <div className="App">
         <header className="App-header">
           <div>
-            <img src={myLogo} className="App-logo" alt="logo"/>
+            <a href='/'>
+              <img src={myLogo} className="App-logo" alt="logo"/>
+            </a>
 
             <ul>
               <li>
