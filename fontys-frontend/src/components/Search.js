@@ -99,50 +99,12 @@ const MovieSearch = () => {
     );
 };
 
-const UserList = () => {
-    const [users, setUsers] = useState([]);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('https://localhost:7149/api/Party/4/Users');
-                const data = await response.json();
-                setUsers(data);
-            } catch (error) {
-                console.log('Error:', error);
-            }
-        };
-
-        fetchData();
-    }, []);
-
-    return (
-        <div>
-            <h2>User List</h2>
-            <ul>
-                {users.map((user) => (
-                    <li key={user.id}>
-                        <strong>Name:</strong> {user.name}<br />
-                        <strong>Email:</strong> {user.email}<br />
-                        <strong>Role:</strong> {user.role}<br />
-                        <img
-                            src={user.pictureUrl}
-                            alt="Profile"
-                            style={{ maxWidth: '100%', height: 'auto' }}
-                        /><br />
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
-};
 
 const MovieList = () => {
     return (
         <div>
             <MovieSearch />
             <TopMovies />
-            <UserList />
         </div>
     );
 };
