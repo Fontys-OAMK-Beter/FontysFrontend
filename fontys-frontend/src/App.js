@@ -1,5 +1,5 @@
 import {BrowserRouter, Route, Routes, NavLink, Outlet} from 'react-router-dom';
-import logo from './logo.svg';
+import myLogo from './Logo.png';
 import './styles/App.scss';
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
@@ -11,7 +11,7 @@ function App() {
   return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo"/>
+          <img src={myLogo} className="App-logo" alt="logo"/>
 
           <ul>
             <li>
