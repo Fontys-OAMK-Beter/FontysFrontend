@@ -22,7 +22,7 @@
         font-weight: bolder;
         text-transform: uppercase;
         position: relative;
-            transition: .2s;
+        transition: .2s;
 
         &::before {
             content: '+';
