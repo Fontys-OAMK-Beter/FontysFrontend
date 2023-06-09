@@ -1,6 +1,8 @@
 import { matchRoutes, useMatch, useParams,   } from "react-router-dom";
 import React, { Component, useEffect } from "react";
 import '../styles/groupDetails.scss';
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 class GroupDetails extends React.Component {
     constructor(props) {
@@ -40,20 +42,56 @@ class GroupDetails extends React.Component {
                     pictureUrl: 'https://www.bigw.com.au/medias/sys_master/images/images/h63/h0e/12097760198686.jpg'
                 }
             ],
-            upcomingEvents: [
-                {
-                    id: 0,
-                    title: 'Spy Kids',
-                    date: '19/08/2023'
-                },
-                {
-                    id: 1,
-                    title: 'Married... with Children',
-                    date: '07/20/2023'
-                }
-            ]
+            upcomingEvents: []
         }
+    };
+
+    componentDidMount() {
+        // Make an API call to fetch the upcoming events for the group
+        axios.get(`/api/event/${this.state.groupId}/events`)
+            .then(response => {
+                const upcomingEvents = response.data;
+                this.setState(prevState => ({
+                    group: {
+                        ...prevState.group,
+                        upcomingEvents: upcomingEvents
+                    }
+                }));
+            })
+            .catch(error => {
+                console.error("Error fetching upcoming events:", error);
+            });
     }
+
+    handleDeleteEvent = (eventId) => {
+        // Show the confirmation dialog
+        if (window.confirm('Are you sure you want to delete this event?')) {
+          // Make an API call to delete the event
+          axios
+            .delete(`/api/event/${eventId}`)
+            .then((response) => {
+              console.log('Event deleted:', response.data);
+              // Update the state to remove the deleted event
+              this.setState((prevState) => {
+                const updatedEvents = prevState.group.upcomingEvents.filter((event) => event.id !== eventId);
+                return {
+                  group: {
+                    ...prevState.group,
+                    upcomingEvents: updatedEvents,
+                  },
+                };
+              });
+            })
+            .catch((error) => {
+              console.error('Error deleting event:', error);
+            });
+        }
+      };
+    
+      handleUpdateEvent = (eventId) => {
+        // Redirect or handle the update event logic as per your requirements
+        console.log('Update event:', eventId);
+      };
 
     render() {
         console.log("Group ID:", this.state.groupId);
@@ -75,12 +113,18 @@ class GroupDetails extends React.Component {
                             </li>
                         ))}
                     </ul>
+                    <div className="createEventContainer">
+                    <Link to="/create-event" className="createEventButton">Create Event</Link>                    
+                    </div>
                     <h4>Upcoming events:</h4>
                     <div className="groupEventList">
                         {this.state.Group.upcomingEvents.map(event => (
                             <a href={"events/" + event.id} key={event.id}>
                                 <h5>{event.title}</h5>
                                 <span>{event.date}</span>
+                                <button onClick={() => this.handleDeleteEvent(event.id)}>Delete</button>
+                                <button onClick={() => this.handleUpdateEvent(event.id)}>Update</button>
+                                
                             </a>
                         ))}
                     </div>
@@ -89,7 +133,7 @@ class GroupDetails extends React.Component {
         );
     }
 }
-
+ 
 const GroupDetailsWithParams = (props) => {
     const params = useParams();
     return <GroupDetails {...props} match={{ params }} />;
