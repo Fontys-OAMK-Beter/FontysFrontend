@@ -10,6 +10,19 @@
             top: 50px;
             border-radius: 10px;
         }
+
+        .groupDelete {
+            button{
+                display: inline-block;
+                border: none;
+                padding: 5px 10px;
+                border-radius: 5px;
+                background-color: red;
+                color: white;
+                font-weight: bold;
+                cursor: pointer;
+            }
+        }
     }
     >div:last-of-type {
         img {
