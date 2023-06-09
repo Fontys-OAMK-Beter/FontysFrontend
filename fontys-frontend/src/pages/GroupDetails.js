@@ -1,69 +1,67 @@
-import { matchRoutes, useMatch, useParams,   } from "react-router-dom";
-import React, { Component, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
 import '../styles/groupDetails.scss';
 import axios from "axios";
-import { Link } from "react-router-dom";
 
-class GroupDetails extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    state = {
-        groupId: this.props.match.params,
-        Group : {
-            id: 0,
-            name: 'The betere group',
-            pictureUrl: 'https://images.unsplash.com/photo-1539635278303-d4002c07eae3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-            members: [
-                {
-                    id: 0,
-                    name: 'Wouter',
-                    pictureUrl: 'https://varbai.com/wp-content/uploads/2019/02/thispersondoesnotexis.jpg'
-                },
-                {
-                    id: 1,
-                    name: 'Brian',
-                    pictureUrl: 'https://www.959jamz.com/wp-content/uploads/2021/04/this-person-does-not-exist.jpeg'
-                },
-                {
-                    id: 2,
-                    name: 'Ruben',
-                    pictureUrl: 'https://preview.redd.it/this-person-does-not-exist-v0-9l5x3d2g21591.jpg?width=640&crop=smart&auto=webp&s=4f2cf32ea788e3ecf10354c2bf2709c1f8ffef4e'
-                },
-                {
-                    id: 3,
-                    name: 'Tom',
-                    pictureUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Mark_Rutte_2015_%281%29_%28cropped%29.jpg/800px-Mark_Rutte_2015_%281%29_%28cropped%29.jpg'
-                },
-                {
-                    id: 4,
-                    name: 'Mike',
-                    pictureUrl: 'https://www.bigw.com.au/medias/sys_master/images/images/h63/h0e/12097760198686.jpg'
-                }
-            ],
+const GroupDetails = () => {
+  const { groupId } = useParams();
+  const [group = {
+            id: null,
+            name: '',
+            pictureUrl: '',
+            members: [],
             upcomingEvents: []
-        }
+  }, setGroup] = useState();
+
+  useEffect(() => {
+    // Fetch the group data from the API using the `groupId`
+    const fetchGroupData = async () => {
+      try {
+        const response = await fetch(`https://localhost:7149/api/Party/${groupId}?PartyId=${groupId}`);
+        const data = await response.json();
+
+        setGroup(prevGroup => ({
+            ...prevGroup,
+            id: data.id,
+            name: data.pictureURL,
+            pictureUrl: data.title,
+        }));
+        // Set the retrieved group data to the `group` state variable
+        //setGroup(data);
+      } catch (error) {
+        console.log('Error:', error);
+      }
     };
 
-    componentDidMount() {
-        // Make an API call to fetch the upcoming events for the group
-        axios.get(`/api/event/${this.state.groupId}/events`)
-            .then(response => {
-                const upcomingEvents = response.data;
-                this.setState(prevState => ({
-                    group: {
-                        ...prevState.group,
-                        upcomingEvents: upcomingEvents
-                    }
-                }));
-            })
-            .catch(error => {
-                console.error("Error fetching upcoming events:", error);
-            });
+    const fetchGroupEvents = () => {
+        axios.get(`https://localhost:7149/api/Event/${groupId}`)
+        .then(response => {
+            const upcomingEvents = response.data;
+            setGroup(prevState => ({
+                    ...prevState,
+                    upcomingEvents: upcomingEvents
+            }));
+        })
+        //console.log(group)
+        .catch(error => {
+            console.error("Error fetching upcoming events:", error);
+        });
     }
 
-    handleDeleteEvent = (eventId) => {
+    fetchGroupData();
+    fetchGroupEvents();
+  }, [groupId]);
+
+//   useEffect(() => {
+//     // Log the updated value of `group`
+//     console.log(group);
+//   }, [group]);
+
+  if (!group) {
+    return <div>Loading...</div>;
+  }
+
+      const handleDeleteEvent = (eventId) => {
         // Show the confirmation dialog
         if (window.confirm('Are you sure you want to delete this event?')) {
           // Make an API call to delete the event
@@ -87,56 +85,68 @@ class GroupDetails extends React.Component {
             });
         }
       };
+      
     
-      handleUpdateEvent = (eventId) => {
+      const handleUpdateEvent = (eventId) => {
         // Redirect or handle the update event logic as per your requirements
         console.log('Update event:', eventId);
       };
 
-    render() {
-        console.log("Group ID:", this.state.groupId);
+      
+  const handleDeleteGroup = async (event) => {
+    event.preventDefault();
 
-        return ( 
-            <div className="groupDetails">
-                <div>
-                    <img src={this.state.Group.pictureUrl} />
-                </div>
-                <div>
-                    <a href="/groups" className="backToGroups">&lt; Back to groups</a>
-                    <h1>{this.state.Group.name}</h1>
-                    <ul className="groupMemberList">
-                        {this.state.Group.members.map(member => (
-                            <li key={member.id}>
-                                <a href={"users/" + member.id}>
-                                    <img src={member.pictureUrl} alt={member.name} title={member.name}></img>
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                    <div className="createEventContainer">
-                    <Link to="/create-event" className="createEventButton">Create Event</Link>                    
-                    </div>
-                    <h4>Upcoming events:</h4>
-                    <div className="groupEventList">
-                        {this.state.Group.upcomingEvents.map(event => (
-                            <a href={"events/" + event.id} key={event.id}>
-                                <h5>{event.title}</h5>
-                                <span>{event.date}</span>
-                                <button onClick={() => this.handleDeleteEvent(event.id)}>Delete</button>
-                                <button onClick={() => this.handleUpdateEvent(event.id)}>Update</button>
-                                
-                            </a>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        );
+    try {
+      const response = await fetch(`https://localhost:7149/api/Party/${groupId}?PartyId=${groupId}`, {
+        method: 'DELETE'
+      });
+
+      const data = await response.json();
+      console.log(data); // Optional: Handle the response data as needed
+    } catch (error) {
+      console.log('Error:', error);
     }
-}
- 
-const GroupDetailsWithParams = (props) => {
-    const params = useParams();
-    return <GroupDetails {...props} match={{ params }} />;
+  };
+
+
+
+  return (
+    <div className="groupDetails">
+      <div>
+        <img src={group.pictureUrl} alt="Group" />
+        <form className="groupDelete" onSubmit={handleDeleteGroup}>
+          <button>Delete this group</button>
+        </form>
+      </div>
+      <div>
+        <Link to="/groups" className="backToGroups">&lt; Back to groups</Link>
+        <h1>{group.name}</h1>
+        {/* <ul className="groupMemberList">
+          {group.members.map(member => (
+            <li key={member.id}>
+              <Link to={"users/" + member.id}>
+                <img src={member.pictureUrl} alt={member.name} title={member.name} />
+              </Link>
+            </li>
+          ))}
+        </ul> */}
+        <div className="createEventContainer">
+          <Link to="/create-event" className="createEventButton">Create Event</Link>
+        </div>
+        <h4>Upcoming events:</h4>
+        <div className="groupEventList">
+          {group.upcomingEvents.map(event => (
+            <Link to={"events/" + event.id} key={event.id}>
+              <h5>{event.title}</h5>
+              <span>{event.date}</span>
+              <button onClick={() => handleDeleteEvent(event.id)}>Delete</button>
+              <button onClick={() => handleUpdateEvent(event.id)}>Update</button>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 };
 
-export default GroupDetailsWithParams;
+export default GroupDetails;

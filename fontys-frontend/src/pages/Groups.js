@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import GroupThumb from '../components/GroupThumb';
 import '../styles/Groups.scss';
+import { useParams } from "react-router-dom";
 
 const Groups = () => {
     const [groupsList, setGroupsList] = useState([]);
+    const { id } = useParams();
 
     const fetchParties = async () => {
         try {
