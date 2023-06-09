@@ -53,7 +53,15 @@ const Groups = () => {
 
     return (
         <div>
-            {groupsList.map((group) => (
+            <div className="GroupsList">
+                <a href="/groups/create">Create a group</a>
+                <h2>Your groups</h2>
+                {groupsList.map(group => {
+                    return <GroupThumb group={group} key={group.id} />;
+                }
+                )}
+            </div>
+            {/* {groupsList.map((group) => (
                 <div key={group.id}>
                     <h2>{group.title}</h2>
                     <ul>
@@ -65,8 +73,10 @@ const Groups = () => {
                         ))}
                     </ul>
                 </div>
-            ))}
+            ))} */}
         </div>
+
+
     );
 };
 
