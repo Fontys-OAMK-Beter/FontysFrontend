@@ -135,14 +135,18 @@ const GroupDetails = () => {
         </div>
         <h4>Upcoming events:</h4>
         <div className="groupEventList">
-          {group.upcomingEvents.map(event => (
-            <Link to={"events/" + event.id} key={event.id}>
-              <h5>{event.title}</h5>
-              <span>{event.date}</span>
-              <button onClick={() => handleDeleteEvent(event.id)}>Delete</button>
-              <button onClick={() => handleUpdateEvent(event.id)}>Update</button>
-            </Link>
-          ))}
+            {group.upcomingEvents.length > 0 ? (
+            group.upcomingEvents.map(event => (
+                <Link to={"events/" + event.id} key={event.id}>
+                <h5>{event.title}</h5>
+                <span>{event.date}</span>
+                <button onClick={() => handleDeleteEvent(event.id)}>Delete</button>
+                <button onClick={() => handleUpdateEvent(event.id)}>Update</button>
+                </Link>
+            ))
+            ) : (
+            <p>No upcoming events</p>
+            )}
         </div>
       </div>
     </div>
