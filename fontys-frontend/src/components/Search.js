@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/MovieSearch.scss'
 
+
 const TopMovies = () => {
     const [movies, setMovies] = useState([]);
 
@@ -137,12 +138,109 @@ const UserList = () => {
     );
 };
 
+
+const CreateParty = () => {
+    const [party, setParty] = useState({
+        title: '',
+        pictureURL: '',
+        userID: '',
+    });
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await fetch('https://localhost:7149/api/Party', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(party),
+            });
+
+            if (response.ok) {
+                console.log('Party created!');
+            } else {
+                // Handle error
+                console.log('Error creating party');
+            }
+        } catch (error) {
+            console.log('Error:', error);
+        }
+    };
+
+    const handleChange = (e) => {
+        setParty({ ...party, [e.target.name]: e.target.value });
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <label>
+                Title:
+                <input
+                    type="text"
+                    name="title"
+                    value={party.title}
+                    onChange={handleChange}
+                />
+            </label>
+            <label>
+                Picture URL:
+                <input
+                    type="text"
+                    name="pictureURL"
+                    value={party.pictureURL}
+                    onChange={handleChange}
+                />
+            </label>
+            <button type="submit">Create Party</button>
+        </form>
+    );
+};
+
+const PartyDetails = ({ partyId }) => {
+    const [party, setParty] = useState(null);
+
+    useEffect(() => {
+        const fetchParty = async () => {
+            try {
+                const response = await fetch(`https://localhost:7149/api/party/${partyId}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    setParty(data);
+                } else {
+                    console.log('Error fetching party');
+                }
+            } catch (error) {
+                console.log('Error:', error);
+            }
+        };
+
+        fetchParty();
+    }, [partyId]);
+
+    if (!party) {
+        return <div>Loading...</div>;
+    }
+
+    return (
+        <div>
+            <h2>{party.title}</h2>
+            <img src={party.pictureURL} alt={party.title} />
+        </div>
+    );
+};
+
+
+
 const MovieList = () => {
     return (
         <div>
             <MovieSearch />
             <TopMovies />
-            <UserList />
+            <CreateParty />
+            <PartyDetails />
         </div>
     );
 };
