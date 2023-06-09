@@ -11,22 +11,7 @@ const GroupDetails = () => {
             pictureUrl: '',
             members: [],
             upcomingEvents: []
-  }, setGroup] = useState(null);
-
-  const handleDeleteGroup = async (event) => {
-    event.preventDefault();
-
-    try {
-      const response = await fetch(`https://localhost:7149/api/Party/${groupId}?PartyId=${groupId}`, {
-        method: 'DELETE'
-      });
-
-      const data = await response.json();
-      console.log(data); // Optional: Handle the response data as needed
-    } catch (error) {
-      console.log('Error:', error);
-    }
-  };
+  }, setGroup] = useState();
 
   useEffect(() => {
     // Fetch the group data from the API using the `groupId`
@@ -34,35 +19,43 @@ const GroupDetails = () => {
       try {
         const response = await fetch(`https://localhost:7149/api/Party/${groupId}?PartyId=${groupId}`);
         const data = await response.json();
+
+        setGroup(prevGroup => ({
+            ...prevGroup,
+            id: data.id,
+            name: data.pictureURL,
+            pictureUrl: data.title,
+        }));
         // Set the retrieved group data to the `group` state variable
-        setGroup(data);
+        //setGroup(data);
       } catch (error) {
         console.log('Error:', error);
       }
     };
 
-    const fetchGroupEvents = axios.get(`/api/event/${this.state.groupId}/events`)
-            .then(response => {
-                const upcomingEvents = response.data;
-                this.setState(prevState => ({
-                    group: {
-                        ...prevState.group,
-                        upcomingEvents: upcomingEvents
-                    }
-                }));
-            })
-            .catch(error => {
-                console.error("Error fetching upcoming events:", error);
-            });
+    const fetchGroupEvents = () => {
+        axios.get(`https://localhost:7149/api/Event/${groupId}`)
+        .then(response => {
+            const upcomingEvents = response.data;
+            setGroup(prevState => ({
+                    ...prevState,
+                    upcomingEvents: upcomingEvents
+            }));
+        })
+        //console.log(group)
+        .catch(error => {
+            console.error("Error fetching upcoming events:", error);
+        });
+    }
 
     fetchGroupData();
     fetchGroupEvents();
   }, [groupId]);
 
-  useEffect(() => {
-    // Log the updated value of `group`
-    console.log(group);
-  }, [group]);
+//   useEffect(() => {
+//     // Log the updated value of `group`
+//     console.log(group);
+//   }, [group]);
 
   if (!group) {
     return <div>Loading...</div>;
@@ -92,11 +85,29 @@ const GroupDetails = () => {
             });
         }
       };
+      
     
       const handleUpdateEvent = (eventId) => {
         // Redirect or handle the update event logic as per your requirements
         console.log('Update event:', eventId);
       };
+
+      
+  const handleDeleteGroup = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await fetch(`https://localhost:7149/api/Party/${groupId}?PartyId=${groupId}`, {
+        method: 'DELETE'
+      });
+
+      const data = await response.json();
+      console.log(data); // Optional: Handle the response data as needed
+    } catch (error) {
+      console.log('Error:', error);
+    }
+  };
+
 
 
   return (
