@@ -55,11 +55,13 @@ const Groups = () => {
         <div>
             {groupsList.map((group) => (
                 <div key={group.id}>
-                    <h2>{group.name}</h2>
-                    <h3>Users:</h3>
+                    <h2>{group.title}</h2>
                     <ul>
                         {group.users.map((user) => (
-                            <li key={user.id}>{user.name}</li>
+                            <li key={user.id}>
+                                <img src={user.pictureUrl} />
+                                <span>{user.name}</span>
+                            </li>
                         ))}
                     </ul>
                 </div>
