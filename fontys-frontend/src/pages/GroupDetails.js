@@ -1,8 +1,6 @@
-import { matchRoutes, useMatch, useParams } from "react-router-dom";
-import React, { Component } from "react";
+import { matchRoutes, useMatch, useParams,   } from "react-router-dom";
+import React, { Component, useEffect } from "react";
 import '../styles/groupDetails.scss';
-import { withRouter } from 'react-router-dom';
-
 
 class GroupDetails extends React.Component {
     constructor(props) {
@@ -10,7 +8,8 @@ class GroupDetails extends React.Component {
     }
 
     state = {
-        Group: {
+        groupId: this.props.match.params,
+        Group : {
             id: 0,
             name: 'The betere group',
             pictureUrl: 'https://images.unsplash.com/photo-1539635278303-d4002c07eae3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
@@ -57,7 +56,9 @@ class GroupDetails extends React.Component {
     }
 
     render() {
-        return (
+        console.log("Group ID:", this.state.groupId);
+
+        return ( 
             <div className="groupDetails">
                 <div>
                     <img src={this.state.Group.pictureUrl} />
@@ -89,4 +90,9 @@ class GroupDetails extends React.Component {
     }
 }
 
-export default GroupDetails;
+const GroupDetailsWithParams = (props) => {
+    const params = useParams();
+    return <GroupDetails {...props} match={{ params }} />;
+};
+
+export default GroupDetailsWithParams;
