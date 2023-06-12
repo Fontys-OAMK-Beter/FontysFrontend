@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/MovieSearch.scss'
 
+
 const TopMovies = () => {
     const [movies, setMovies] = useState([]);
 
@@ -137,12 +138,218 @@ const UserList = () => {
     );
 };
 
+
+const CreateParty = () => {
+    const [party, setParty] = useState({
+        title: '',
+        pictureURL: '',
+        userID: '',
+    });
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await fetch('https://localhost:7149/api/Party', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(party),
+            });
+
+            if (response.ok) {
+                console.log('Party created!');
+            } else {
+                // Handle error
+                console.log('Error creating party');
+            }
+        } catch (error) {
+            console.log('Error:', error);
+        }
+    };
+
+    const handleChange = (e) => {
+        setParty({ ...party, [e.target.name]: e.target.value });
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <label>
+                Title:
+                <input
+                    type="text"
+                    name="title"
+                    value={party.title}
+                    onChange={handleChange}
+                />
+            </label>
+            <label>
+                Picture URL:
+                <input
+                    type="text"
+                    name="pictureURL"
+                    value={party.pictureURL}
+                    onChange={handleChange}
+                />
+            </label>
+            <button type="submit">Create Party</button>
+        </form>
+    );
+};
+
+const PartyDetails = ({ partyId }) => {
+    const [party, setParty] = useState(null);
+
+    useEffect(() => {
+        const fetchParty = async () => {
+            try {
+                const response = await fetch(`https://localhost:7149/api/party/${partyId}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    setParty(data);
+                } else {
+                    console.log('Error fetching party');
+                }
+            } catch (error) {
+                console.log('Error:', error);
+            }
+        };
+
+        fetchParty();
+    }, [partyId]);
+
+    if (!party) {
+        return <div>Loading...</div>;
+    }
+
+    return (
+        <div>
+            <h2>{party.title}</h2>
+            <img src={party.pictureURL} alt={party.title} />
+        </div>
+    );
+};
+
+
+
+const CRUDComponent = () => {
+    const [items, setItems] = useState([]);
+    const [formData, setFormData] = useState({ Id: 0, Title: '', PictureURL: '' });
+
+    useEffect(() => {
+        fetchItems();
+    }, []);
+
+    const fetchItems = async () => {
+        try {
+            const response = await fetch('https://localhost:7149/api/party');
+            if (response.ok) {
+                const data = await response.json();
+                setItems(data);
+            } else {
+                console.error('Failed to fetch items:', response.status, response.statusText);
+            }
+        } catch (error) {
+            console.error('Error fetching items:', error);
+        }
+    };
+
+    const createItem = async () => {
+        try {
+            const response = await fetch('https://localhost:7149/api/party', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                const newItem = await response.json();
+                setItems([...items, newItem]);
+                setFormData({ Id: 0, Title: '', PictureURL: '' });
+            } else {
+                console.error('Failed to create item:', response.status, response.statusText);
+            }
+        } catch (error) {
+            console.error('Error creating item:', error);
+        }
+    };
+
+    const handleFormSubmit = (event) => {
+        event.preventDefault();
+        createItem();
+    };
+
+    const handleInputChange = (event) => {
+        setFormData({ ...formData, [event.target.name]: event.target.value });
+    };
+
+    const deleteItem = async (itemId) => {
+        try {
+            const response = await fetch(`https://localhost:7149/api/party/${itemId}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                const updatedItems = items.filter((item) => item.Id !== itemId);
+                setItems(updatedItems);
+            } else {
+                console.error('Failed to delete item:', response.status, response.statusText);
+            }
+        } catch (error) {
+            console.error('Error deleting item:', error);
+        }
+    };
+
+    return (
+        <div>
+            <h2>CRUD Component</h2>
+            <form onSubmit={handleFormSubmit}>
+                <div>
+                    <label htmlFor="title">Title:</label>
+                    <input type="text" id="title" name="Title" value={formData.Title} onChange={handleInputChange} />
+                </div>
+                <div>
+                    <label htmlFor="pictureURL">Picture URL:</label>
+                    <input
+                        type="text"
+                        id="pictureURL"
+                        name="PictureURL"
+                        value={formData.PictureURL}
+                        onChange={handleInputChange}
+                    />
+                </div>
+                <button type="submit">Create</button>
+            </form>
+            <h3>Items:</h3>
+            <ul>
+                {items.map((item) => (
+                    <li key={item.Id}>
+                        <span>Title: {item.Title}</span>
+                        <span>Picture URL: {item.PictureURL}</span>
+                        <button onClick={() => delete
+                            (item.Id)}>Delete</button>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+};
+
+
+
+
 const MovieList = () => {
     return (
         <div>
             <MovieSearch />
             <TopMovies />
-            <UserList />
+            <CreateParty />
+            <PartyDetails />
+            <CRUDComponent />
         </div>
     );
 };

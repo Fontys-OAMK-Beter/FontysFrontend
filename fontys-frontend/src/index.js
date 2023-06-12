@@ -14,6 +14,7 @@ import GroupDetails from './pages/GroupDetails';
 import MovieList from './components/Search';
 import CreateGroupPage from './pages/CreateParty';
 import Event from './components/Event';
+import CreateEvent from './pages/CreateEvent';
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,9 @@ const router = createBrowserRouter([
       //   path: "/user/:userId",
       //   element: <Event />,
       // },
+        path: "/create-event",
+        element: <CreateEvent />,
+      },
     ],
   },
 ]);
