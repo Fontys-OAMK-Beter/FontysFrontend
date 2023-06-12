@@ -13,6 +13,8 @@ import Groups from './pages/Groups';
 import GroupDetails from './pages/GroupDetails';
 import MovieList from './components/Search';
 import CreateGroupPage from './pages/CreateParty';
+import Event from './components/Event';
+import CreateEvent from './pages/CreateEvent';
 import MovieVote from './pages/MovieVote';
 
 const router = createBrowserRouter([
@@ -35,6 +37,26 @@ const router = createBrowserRouter([
       {
         path: "/movies",
         element: <MovieList />,
+      },
+      {
+        path: "/events",
+        element: <Event />,
+      },
+      // {
+      //   path: "/events/:eventId",
+      //   element: <Event />,
+      // },
+      // {
+      //   path: "/user",
+      //   element: <Event />,
+      // },
+      // {
+      //   path: "/user/:userId",
+      //   element: <Event />,
+      // },
+      {
+        path: "/create-event",
+        element: <CreateEvent />,
       },
       {
         path: "/movieVote",

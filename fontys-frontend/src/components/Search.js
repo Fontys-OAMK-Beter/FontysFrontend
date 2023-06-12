@@ -234,6 +234,114 @@ const PartyDetails = ({ partyId }) => {
 
 
 
+const CRUDComponent = () => {
+    const [items, setItems] = useState([]);
+    const [formData, setFormData] = useState({ Id: 0, Title: '', PictureURL: '' });
+
+    useEffect(() => {
+        fetchItems();
+    }, []);
+
+    const fetchItems = async () => {
+        try {
+            const response = await fetch('https://localhost:7149/api/party');
+            if (response.ok) {
+                const data = await response.json();
+                setItems(data);
+            } else {
+                console.error('Failed to fetch items:', response.status, response.statusText);
+            }
+        } catch (error) {
+            console.error('Error fetching items:', error);
+        }
+    };
+
+    const createItem = async () => {
+        try {
+            const response = await fetch('https://localhost:7149/api/party', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                const newItem = await response.json();
+                setItems([...items, newItem]);
+                setFormData({ Id: 0, Title: '', PictureURL: '' });
+            } else {
+                console.error('Failed to create item:', response.status, response.statusText);
+            }
+        } catch (error) {
+            console.error('Error creating item:', error);
+        }
+    };
+
+    const handleFormSubmit = (event) => {
+        event.preventDefault();
+        createItem();
+    };
+
+    const handleInputChange = (event) => {
+        setFormData({ ...formData, [event.target.name]: event.target.value });
+    };
+
+    const deleteItem = async (itemId) => {
+        try {
+            const response = await fetch(`https://localhost:7149/api/party/${itemId}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                const updatedItems = items.filter((item) => item.Id !== itemId);
+                setItems(updatedItems);
+            } else {
+                console.error('Failed to delete item:', response.status, response.statusText);
+            }
+        } catch (error) {
+            console.error('Error deleting item:', error);
+        }
+    };
+
+    return (
+        <div>
+            <h2>CRUD Component</h2>
+            <form onSubmit={handleFormSubmit}>
+                <div>
+                    <label htmlFor="title">Title:</label>
+                    <input type="text" id="title" name="Title" value={formData.Title} onChange={handleInputChange} />
+                </div>
+                <div>
+                    <label htmlFor="pictureURL">Picture URL:</label>
+                    <input
+                        type="text"
+                        id="pictureURL"
+                        name="PictureURL"
+                        value={formData.PictureURL}
+                        onChange={handleInputChange}
+                    />
+                </div>
+                <button type="submit">Create</button>
+            </form>
+            <h3>Items:</h3>
+            <ul>
+                {items.map((item) => (
+                    <li key={item.Id}>
+                        <span>Title: {item.Title}</span>
+                        <span>Picture URL: {item.PictureURL}</span>
+                        <button onClick={() => delete
+                            (item.Id)}>Delete</button>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+};
+
+
+
+
 const MovieList = () => {
     return (
         <div>
@@ -241,6 +349,7 @@ const MovieList = () => {
             <TopMovies />
             <CreateParty />
             <PartyDetails />
+            <CRUDComponent />
         </div>
     );
 };
