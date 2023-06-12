@@ -1,0 +1,140 @@
+.moviesList {
+    >form {
+        margin-bottom: 50px;
+        input {
+            box-sizing: border-box;
+            display: block;
+            border: none;
+            background-color: #eee;
+            border-radius: 10px;
+            padding: .5rem .8rem;
+
+            &::placeholder{
+                color: #777;
+            }
+
+            &:focus {
+                outline: 1px solid lighten(#9716A3, 8);
+            }
+        }
+        button {
+            margin: 10px 0 0 0;
+            background-color: #9716A3;
+            color: white;
+            text-decoration: none;
+            padding: .8rem 1.2rem;
+            border-radius: 10px;
+            font-weight: bolder;
+            text-transform: uppercase;
+            position: relative;
+            border: none;
+            transition: .2s;
+            cursor: pointer;
+    
+            &:hover {
+                background-color: lighten(#9716A3, 8);
+            }
+        }
+    }
+
+    >div {
+        display: grid;
+        grid-template-columns:  1fr 1fr 1fr 1fr;
+        gap: 20px;
+        >a {
+            background-color: #eee;
+            border-radius: 10px;
+            box-shadow: 5px 5px 10px rgba(black, .15);
+            text-decoration: none;
+            
+            *{
+                display: block;
+                transition: .2s;
+            }
+            img {
+                border-radius: 10px 10px 0 0;
+                width: 100%;
+                object-fit: cover;
+                object-position: top;
+                height: 350px;
+            }
+            h2{
+                padding: 0 10px;
+                margin: 5px 0;
+                font-size: 1.2rem;
+                color: black;
+            }
+            p{
+                padding: 0 10px;
+                margin: 5px 0;
+                color: #aaa;
+                font-weight: bold;
+            }
+            &:hover {
+                img {
+                    opacity: .7;
+                }
+                h2 {
+                    color: lighten(#9716A3, 8);
+                }
+            }
+        }
+    }
+    >table{
+        width: 100%;//laten staan. zorgt dat alle breed genoeg is
+        //border-collapse: collapse; //niet doen, is lelijk
+        border-radius: 10px; //mooie ronde hoeken
+        box-shadow: 5px 5px 10px rgba(rgb(151, 22, 163), .55); // de schaduw onder en rechts vn de tabel
+        margin-bottom: 50px;
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #9716A3;
+            border-right: 1px solid #9716A3;
+            border-radius: 5px;
+            text-align: left;
+        }
+        th {
+            background-color: #9716A3;
+            border-radius: 10px 10px 0 0;
+            color: white;
+            
+        }
+        td {
+            button {
+                background-color: #9716A3;
+                color: white;
+                text-decoration: none;
+                padding: .8rem 1.2rem;
+                border-radius: 10px;
+                font-weight: bolder;
+                text-transform: uppercase;
+                position: relative;
+                border: none;
+                transition: .2s;
+                cursor: pointer;
+        
+                &:hover {
+                    background-color: lighten(#9716A3, 8);
+                }
+            }
+        }
+    }
+}
+.selectButton{
+        margin: 10px 0 0 0;
+    background-color: #9716A3;
+    color: white;
+    text-decoration: none;
+    padding: .8rem 1.2rem;
+    border-radius: 10px;
+    font-weight: bolder;
+    text-transform: uppercase;
+    position: relative;
+    border: none;
+    transition: .2s;
+    cursor: pointer;
+
+    &:hover {
+        background-color: lighten(#9716A3, 8);
+    }
+}

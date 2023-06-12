@@ -37,6 +37,11 @@ function App() {
                   Movies
                 </NavLink>
               </li>
+              <li>
+                <NavLink to="/movieVote">
+                  MovieVote
+                </NavLink>
+              </li>
             </ul>
           </div>
         </header>
